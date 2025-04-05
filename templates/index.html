@@ -1,1 +1,51 @@
- templates/
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Yours Notepad — AwesomeVed</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+        }
+        h1 { color: #2d7dd2; font-size: 36px; }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            width: 250px;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #2d7dd2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        footer {
+            margin-top: 60px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>📝 Yours Notepad</h1>
+    <p>Welcome! Create or open any notepad file.</p>
+    <form action="/note" method="get" onsubmit="event.preventDefault(); window.location = '/note/' + document.getElementById('name').value;">
+        <input type="text" placeholder="Enter note name" id="name" required>
+        <br>
+        <button type="submit">Go ➜</button>
+    </form>
+    <footer>Designed by <strong>AwesomeVed</strong> ✨</footer>
+</body>
+</html>
