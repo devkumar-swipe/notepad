@@ -1,1 +1,101 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ note_name }} | Yours Notepad</title>
+    <style>
+        :root {
+            --bg-color: #f9fbfd;
+            --text-color: #333;
+            --textarea-bg: #fdfdfd;
+        }
+        body.dark {
+            --bg-color: #121212;
+            --text-color: #f1f1f1;
+            --textarea-bg: #1e1e1e;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 30px;
+            max-width: 900px;
+            margin: auto;
+            transition: background 0.3s, color 0.3s;
+        }
+        h2 { color: #2d7dd2; }
+        textarea {
+            width: 100%;
+            height: 70vh;
+            font-size: 16px;
+            padding: 15px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: var(--textarea-bg);
+            color: {{ 'red' if note_name == 'admin' else '#333' }};
+        }
+        .toolbar {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        button, .color-btn {
+            padding: 8px 14px;
+            background-color: #2d7dd2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>📝 Yours Notepad</h2>
+    <p><strong>Document:</strong> {{ note_name }} | 👁️ Views: {{ views }}</p>
+    <div class="toolbar">
+        <button onclick="copyLink()">📋 Copy Link</button>
+        {% if note_name != 'admin' %}
+        <label for="colorPicker">🎨 Font:</label>
+        <input type="color" id="colorPicker" class="color-btn" value="#333333">
+        {% endif %}
+        <button onclick="toggleTheme()">🌓 Toggle Theme</button>
+    </div>
+    <form id="noteForm">
+        <textarea name="content" id="content">{{ content }}</textarea>
+    </form>
+    <p id="status">Saved</p>
+    <footer>Designed by <strong>AwesomeVed</strong> 🚀 | Emoji supported 😄🎉✨</footer>
+    <script>
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied!");
+        }
+        const colorPicker = document.getElementById('colorPicker');
+        const content = document.getElementById('content');
+        if (colorPicker) {
+            colorPicker.addEventListener('input', () => {
+                content.style.color = colorPicker.value;
+            });
+        }
+        function toggleTheme() {
+            document.body.classList.toggle("dark");
+        }
+        setInterval(() => {
+            fetch("", {
+                method: "POST",
+                body: new FormData(document.getElementById("noteForm"))
+            }).then(() => {
+                document.getElementById("status").textContent = "Saved ✔️";
+            });
+        }, 2000);
+    </script>
+</body>
+</html>
